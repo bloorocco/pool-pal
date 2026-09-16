@@ -278,14 +278,15 @@ function TasksTab({
             </button>
           ))}
         </div>
-        <form className="form" onSubmit={submit} noValidate>
+        <form className="form" onSubmit={submit}>
           <div className="fields">
             <label className="span-2">
               Task
               <input
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
-                placeholder="Vacuum the floor"
+                placeholder="e.g. Vacuum the floor"
+                required
               />
             </label>
             <label>
@@ -407,7 +408,7 @@ function NotesTab({
             <textarea
               value={body}
               onChange={(event) => setBody(event.target.value)}
-              placeholder="Cloudy after yesterday’s rain. Running filter overnight."
+              placeholder="e.g. Cloudy after the rain — running the filter overnight."
               required
             />
           </label>

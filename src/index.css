@@ -290,6 +290,12 @@ label {
   grid-column: span 2;
 }
 
+input::placeholder,
+textarea::placeholder {
+  color: #8aa3a9;
+  opacity: 1;
+}
+
 input,
 textarea {
   width: 100%;
