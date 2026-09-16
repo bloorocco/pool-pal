@@ -13,6 +13,7 @@ import {
   fromDatetimeLocalValue,
   toDatetimeLocalValue,
   todayIsoDate,
+  normalizeIsoDate,
 } from './dates'
 import type { Reading, Sanitizer, TabId, Task } from './types'
 import { usePoolStore } from './usePoolStore'
@@ -249,7 +250,9 @@ function TasksTab({
 
   function submit(event: FormEvent) {
     event.preventDefault()
-    onAdd(title, dueOn)
+    const nextTitle = title.trim()
+    if (!nextTitle) return
+    onAdd(nextTitle, normalizeIsoDate(dueOn))
     setTitle('')
     setDueOn(todayIsoDate())
   }
@@ -275,7 +278,7 @@ function TasksTab({
             </button>
           ))}
         </div>
-        <form className="form" onSubmit={submit}>
+        <form className="form" onSubmit={submit} noValidate>
           <div className="fields">
             <label className="span-2">
               Task
@@ -283,7 +286,6 @@ function TasksTab({
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
                 placeholder="Vacuum the floor"
-                required
               />
             </label>
             <label>
@@ -291,8 +293,10 @@ function TasksTab({
               <input
                 type="date"
                 value={dueOn}
-                onChange={(event) => setDueOn(event.target.value)}
-                required
+                onChange={(event) => {
+                  const next = event.target.value
+                  setDueOn(next ? normalizeIsoDate(next) : todayIsoDate())
+                }}
               />
             </label>
           </div>

@@ -91,7 +91,7 @@ export function statusLabel(status: RangeStatus): string {
 }
 
 export function formatMetric(value: number, range: MetricRange): string {
-  const digits = range.step < 1 ? 1 : 0
+  const digits = range.step < 1 && !Number.isInteger(value) ? 1 : 0
   const formatted = value.toFixed(digits)
   return range.unit ? `${formatted} ${range.unit}` : formatted
 }
